@@ -1,5 +1,5 @@
 """
-cli/grade_cmd.py - `shrunner grade` subcommand.
+cli/grade_cmd.py - `janitor grade` subcommand.
 
 Runs the hidden test grader on the current state of a task's script.
 """

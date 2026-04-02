@@ -1,9 +1,9 @@
 """
-cli/main.py - Entry point for the `shrunner` CLI.
+cli/main.py - Entry point for the `janitor` CLI.
 
 Usage:
-    shrunner run <task_id> [options]
-    shrunner grade <task_id> [options]
+    janitor run <task_id> [options]
+    janitor grade <task_id> [options]
 """
 
 import click

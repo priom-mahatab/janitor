@@ -1,5 +1,5 @@
 """
-cli/run_cmd.py — `shrunner run` subcommand.
+cli/run_cmd.py — `janitor run` subcommand.
 
 Starts the agent loop on a given task.
 """
@@ -12,7 +12,7 @@ console = Console()
 @click.command()
 @click.argument("task_id")
 @click.option(
-    "--task-dir",
+    "--tasks-dir",
     default="tasks",
     show_default=True,
     help="Path to the tasks library directory.",
@@ -22,7 +22,7 @@ console = Console()
     "--max-iterations",
     default=10,
     show_default=True,
-    help="Maximum number of fix attempets before giving up.",
+    help="Maximum number of fix attempts before giving up.",
 )
 
 @click.option(
@@ -33,13 +33,20 @@ console = Console()
 )
 
 @click.option(
+    "--provider",
+    default="anthropic",
+    show_default=True,
+    help="LLM provider to use for the agent (anthropic or openai).",
+)
+
+@click.option(
     "--verbose", "-v",
     is_flag=True,
     help="Stream agent reasoning to stdout."
 )
 def run(task_id: str,
-    task_dir: str,
-    max_terations: int,
+    tasks_dir: str,
+    max_iterations: int,
     model: str,
     provider: str,
     verbose: bool) -> None:
@@ -48,8 +55,8 @@ def run(task_id: str,
     from utils.config import load_config
 
     config = load_config(
-        task_dir=task_dir,
-        max_iterations=max_terations,
+        tasks_dir=tasks_dir,
+        max_iterations=max_iterations,
         model=model,
         provider=provider, 
         verbose=verbose
