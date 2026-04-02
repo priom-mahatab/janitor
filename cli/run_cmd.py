@@ -32,5 +32,41 @@ console = Console()
     help="LLM model to use for the agent.",
 )
 
-def run() -> None:
-    pass
+@click.option(
+    "--verbose", "-v",
+    is_flag=True,
+    help="Stream agent reasoning to stdout."
+)
+def run(task_id: str,
+    task_dir: str,
+    max_terations: int,
+    model: str,
+    provider: str,
+    verbose: bool) -> None:
+    """Run the self-healing agent on TASK_ID."""
+    from agent.loop import AgentLoop
+    from utils.config import load_config
+
+    config = load_config(
+        task_dir=task_dir,
+        max_iterations=max_terations,
+        model=model,
+        provider=provider, 
+        verbose=verbose
+    )
+
+    console.rule(f"[bold cyan]janitor run · {task_id}[/bold cyan]")
+
+    loop = AgentLoop(config)
+    result = loop.run(task_id)
+
+    if result.success:
+        console.print(f"\n[bold green]✔ Fixed in {result.iterations} iteration(s).[/bold green]")
+    else:
+        console.print(
+            f"\n[bold red]✘ Gave up after {result.iterations} iteration(s).[/bold red]"
+        )
+    
+    raise SystemExit(0 if result.success else 1)
+    
+
