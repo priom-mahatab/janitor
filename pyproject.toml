@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=72", "setuptools-scm"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "janitor"
+version = "0.1.0"
+description = "An agent that iteratively fixes broken Python scripts until tests pass."
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.25",
+    "openai>=1.30",
+    "pytest>=8.0",
+    "click>=8.1",
+    "rich>=13.0",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest-cov",
+]
+
+[project.scripts]
+janitor = "cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cli*", "agent*", "grader*", "utils*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
