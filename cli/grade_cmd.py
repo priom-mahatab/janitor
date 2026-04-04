@@ -13,7 +13,7 @@ console = Console()
 @click.command()
 @click.argument("task_id")
 @click.option(
-    "--task-dir",
+    "--tasks-dir",
     default="tasks",
     show_default=True,
     help="Path to the tasks library directory.",
@@ -28,9 +28,9 @@ def grade(task_id: str, tasks_dir: str, strict: bool) -> None:
     from grader.grader import Grader
     from utils.config import load_config
 
-    config = load_config(tasks_dir=tasks_dir)
+    config = load_config(task_dir=tasks_dir)
 
-    console.rule(f"[bold cyan]shrunner grade · {task_id}[/bold cyan]")
+    console.rule(f"[bold cyan]janitor grade · {task_id}[/bold cyan]")
 
     grader = Grader(config)
     result = grader.grade(task_id, strict=strict)
