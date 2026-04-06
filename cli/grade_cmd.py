@@ -13,7 +13,7 @@ console = Console()
 @click.command()
 @click.argument("task_id")
 @click.option(
-    "--tasks-dir",
+    "--task-dir",
     default="tasks",
     show_default=True,
     help="Path to the tasks library directory.",
@@ -23,12 +23,12 @@ console = Console()
     is_flag=True,
     help="Fail immediately on any cheat detection hit.",
 )
-def grade(task_id: str, tasks_dir: str, strict: bool) -> None:
+def grade(task_id: str, task_dir: str, strict: bool) -> None:
     """Grade the solution for TASK_ID using hidden tests."""
     from grader.grader import Grader
     from utils.config import load_config
 
-    config = load_config(task_dir=tasks_dir)
+    config = load_config(tasks_dir=task_dir)
 
     console.rule(f"[bold cyan]janitor grade · {task_id}[/bold cyan]")
 
